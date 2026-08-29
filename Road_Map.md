@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 1A completed · Phase 1B next — awaiting JP git identity (bun installs within 1B) · Phases 2–8 not started
+**Current position:** Phase 1B completed · Phase 2 next — Phases 3–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -25,27 +25,16 @@ aid tracking.
 
 ---
 
-## Phase 0 — Workspace & Reference Verification — ✅ COMPLETED
-Audit of workspace structure, reference stack, content snapshot, host
-tooling. Output: HYDRA Phase 0 report (Next.js 16 / React 19 / TypeScript /
-Tailwind v4 / shadcn/ui / Prisma; three views confirmed; content matches
-canonical brief). Met its completion criteria.
+## Completed Foundations (compressed record)
+- Workspace & reference verification: stack identified (Next.js 16 ·
+  React 19 · TypeScript · Tailwind v4 · shadcn/ui · Prisma); three
+  views confirmed; content matched canonical brief. History: commit
+  4136936.
+- Root documentation: .gitignore, README.md, Road_Map.md created and
+  HYDRA-verified; Frontend/ and Backend/ established with .gitkeep
+  files. History: commit 4136936.
 
-## Phase 1A — Root Documentation — ✅ COMPLETED
-Objective: documentation foundation before any code lands.
-Implementation: create .gitignore, README.md, Road_Map.md at root;
-.gitkeep in Frontend/ and Backend/.
-Expected output: five tracked-ready files; no code.
-Requirements: brand-voice compliant; no secrets; no hardcoded counts in
-identity copy.
-Dependencies: none.
-Completion criteria: files exist exactly as specified; HYDRA-verified;
-status updated to COMPLETED.
-Completion record: HYDRA-verified complete — .gitignore, README.md,
-Road_Map.md, Frontend/.gitkeep, Backend/.gitkeep created with exact
-content; no git operations performed (correct: identity pending).
-
-## Phase 1B — Tooling & Git Bootstrap — ⛔ BLOCKED (awaiting JP: git identity)
+## Phase 1B — Tooling & Git Bootstrap — ✅ COMPLETED
 Objective: version control and first push to GitHub.
 Implementation: install bun (official PowerShell installer — absence
 verified by probe; required by reference's bun.lock); configure git
@@ -60,6 +49,11 @@ Dependencies: Phase 1A complete; JP supplies git identity; GitHub
 credentials available on host.
 Completion criteria: initial commit on main; push verified by HYDRA;
 GitHub repo shows the files.
+Completion record: HYDRA-verified complete — bun 1.4.0 installed;
+repo-local identity configured; commit 4136936 (five files) pushed
+with --force-with-lease after remote verification gate passed
+(remote contained only an auto-generated README). GitHub main
+matches local main; working tree clean.
 
 ## Phase 2 — Frontend Establishment — ⚪ NOT STARTED
 Objective: the reference UI, running in Frontend/, visually unmodified —
