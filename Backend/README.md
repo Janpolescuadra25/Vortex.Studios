@@ -10,7 +10,9 @@ Node 22 · TypeScript · Express 5 (Phase 3B) · Prisma 6 · PostgreSQL
 ## Status
 Part A — database layer (schema, migrations, canonical seed v2,
 self-healing) — ✅ HYDRA-verified complete.
-Part B — API endpoints — next (Phase 3B).
+Part B — API endpoints (/health, /api/products, /api/changelog,
+/api/stats, /api/site-config + CORS) — ✅ HYDRA-verified complete.
+Phase 3 fully delivered.
 
 ## Data models
 Product (lane, status, date, description, sortOrder) · ChangelogEntry

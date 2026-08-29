@@ -53,7 +53,7 @@ extracted into src/components/vortex/vortex-app-shell.tsx
 (initialView prop); three thin route pages; routes re-verified;
 commit a9772d6 pushed; working tree clean.
 
-## Phase 3 — Backend Foundation — 🔄 IN PROGRESS (3A database layer complete · 3B API endpoints next)
+## Phase 3 — Backend Foundation — ✅ COMPLETED
 Objective: API service powering The Hub, What's New, Stats AND the site
 configuration that the Owner Dashboard will later manage.
 Implementation: Node.js HTTP API in Backend/ (framework finalized in
@@ -80,6 +80,13 @@ Completion record (3A): HYDRA-verified complete — Prisma schema
 migrated; canonical self-healing seed v2 converged (9 products, 5
 changelog entries; 9 non-canonical rows purged); Backend/README.md
 created; committed and pushed. 3B (API endpoints) pending.
+Completion record (3B-1): HYDRA-verified complete — Express server
+live on port 4000; /health + /api/products with status/lane filters;
+six-case matrix passing; commit 1421235.
+Completion record (3B-2): HYDRA-verified complete — /api/changelog
+(+type filter), /api/stats, /api/site-config with defaults fallback,
+CORS restricted to configured origin; twelve-case matrix passing;
+Phase 3 fully delivered.
 
 ## Phase 4 — Owner Authentication — ⚪ NOT STARTED
 Objective: a hidden, authenticated entrance for the studio owner only.
