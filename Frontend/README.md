@@ -27,5 +27,12 @@ Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui.
 - api/route.ts placeholder retained as-is pending Phase 3/6.
 - bun.lock committed for reproducible installs.
 
+## Phase 2.1 — Shell unification
+The three URL entry points (/, /the-hub, /whats-new) share ONE shell
+component: src/components/vortex/vortex-app-shell.tsx (client-side
+view switching, cinematic transitions, initialView prop). In-app
+navigation switches views client-side; the URL reflects the entry
+point. This replaces the Phase 2 wrapper duplication.
+
 ## Status
 Implemented — awaiting HYDRA verification.
