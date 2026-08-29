@@ -1,0 +1,166 @@
+# VORTEX STUDIOS — BUILD ROADMAP
+
+Living document. Tracks the build of the Vortex Studios platform — web
+presence, supporting services and the owner dashboard. Statuses reflect
+HYDRA-verified repository state, never intentions. Updated as phases
+complete; completed phases are compressed or removed when they no longer
+aid tracking.
+
+**Current position:** Phase 1A completed · Phase 1B next — awaiting JP git identity (bun installs within 1B) · Phases 2–8 not started
+
+## Ground rules
+1. Repository root is this folder. Reference material (Docs\Vortex_reference)
+   stays outside the repo — local-only, never committed.
+2. Reference wins for visuals, layout and motion. The canonical brand brief
+   wins for factual content (product data, statuses, counts).
+3. No secrets in git, ever — and none in prompts. Credentials travel
+   JP → .env → server only. Owner password stored as a bcrypt hash.
+4. Every implemented section ships a section README, marked DONE only
+   after HYDRA-verified audit.
+5. Roles: CYPRA plans · HYDRA verifies · MANTRA executes. No crossings.
+6. Identity copy stays category-agnostic and count-agnostic. Categories
+   and counts appear only where they are the actual content.
+7. The Owner Dashboard is owner-facing tooling; brand voice rules govern
+   its public-facing output, not its chrome.
+
+---
+
+## Phase 0 — Workspace & Reference Verification — ✅ COMPLETED
+Audit of workspace structure, reference stack, content snapshot, host
+tooling. Output: HYDRA Phase 0 report (Next.js 16 / React 19 / TypeScript /
+Tailwind v4 / shadcn/ui / Prisma; three views confirmed; content matches
+canonical brief). Met its completion criteria.
+
+## Phase 1A — Root Documentation — ✅ COMPLETED
+Objective: documentation foundation before any code lands.
+Implementation: create .gitignore, README.md, Road_Map.md at root;
+.gitkeep in Frontend/ and Backend/.
+Expected output: five tracked-ready files; no code.
+Requirements: brand-voice compliant; no secrets; no hardcoded counts in
+identity copy.
+Dependencies: none.
+Completion criteria: files exist exactly as specified; HYDRA-verified;
+status updated to COMPLETED.
+Completion record: HYDRA-verified complete — .gitignore, README.md,
+Road_Map.md, Frontend/.gitkeep, Backend/.gitkeep created with exact
+content; no git operations performed (correct: identity pending).
+
+## Phase 1B — Tooling & Git Bootstrap — ⛔ BLOCKED (awaiting JP: git identity)
+Objective: version control and first push to GitHub.
+Implementation: install bun (official PowerShell installer — absence
+verified by probe; required by reference's bun.lock); configure git
+identity repo-local (values supplied by JP); git init -b main; remote
+origin → https://github.com/Janpolescuadra25/Vortex.Studios.git; verify
+git status shows only the five Phase 1A files → commit →
+git push -u origin main.
+Expected output: initialized repo on main; first commit pushed; clean tree.
+Requirements: .gitignore present before first commit; no force push; hard
+stops on auth failure or non-fast-forward rejection.
+Dependencies: Phase 1A complete; JP supplies git identity; GitHub
+credentials available on host.
+Completion criteria: initial commit on main; push verified by HYDRA;
+GitHub repo shows the files.
+
+## Phase 2 — Frontend Establishment — ⚪ NOT STARTED
+Objective: the reference UI, running in Frontend/, visually unmodified —
+public site only, no admin surface yet.
+Implementation: copy reference source into Frontend/ using the exclusion
+list verified by audit (.git, node_modules, .next, .env and all .env
+variants, *.db, caches); install dependencies with bun; resolve any
+database-dependent module per audit findings, using local PostgreSQL for
+development if required; run dev server; verify all three views.
+Expected output: Frontend/ is a complete, running Next.js app with the
+reference UI intact.
+Requirements: visual parity with reference; content diffed against the
+canonical brief — brief wins on factual mismatch; no reference-only
+secrets copied.
+Completion criteria: dev server serves localhost:3000; Landing (/),
+The Hub (/the-hub) and What's New (/whats-new) render without errors;
+HYDRA-verified; Frontend/README.md created, marked DONE after verification.
+
+## Phase 3 — Backend Foundation — ⚪ NOT STARTED
+Objective: API service powering The Hub, What's New, Stats AND the site
+configuration that the Owner Dashboard will later manage.
+Implementation: Node.js HTTP API in Backend/ (framework finalized in
+Phase 3 planning) + Prisma ORM. Data models: products (name, lane, status,
+date, description); changelog entries (type: launch / update /
+announcement / milestone; date; body); site_config (JSON document per
+landing section — content overrides, section visibility, appearance
+settings); owner_account (email, password_hash ONLY — no plaintext,
+ever); media (metadata; binary lives in object storage, decision pending:
+recommended Vercel Blob). Database: local PostgreSQL development /
+Neon production — same schema, env-switched. Public endpoints (minimum):
+GET /health · GET /api/products (status/lane filters) · GET /api/changelog
+· GET /api/stats · GET /api/site-config (public view; falls back to
+built-in defaults when unconfigured). Seed script loads the canonical
+lineup and changelog from the brief timeline. CORS restricted to known
+frontend origins. .env.example documents every key name (values set by
+JP only). Dependencies: Phase 1B; local PostgreSQL service status
+confirmed by audit; Neon account.
+Completion criteria: endpoints return valid canonical data against the
+local database; empty site_config falls back to defaults; migrations
+reproducible from scratch; HYDRA-verified; Backend/README.md created,
+marked DONE after verification.
+
+## Phase 4 — Owner Authentication — ⚪ NOT STARTED
+Objective: a hidden, authenticated entrance for the studio owner only.
+Implementation: admin path segment sourced from env (ADMIN_PATH) — never
+hardcoded, never linked from public pages, noindex, excluded from
+sitemaps; login endpoint with rate limiting and timing-safe comparison
+against the bcrypt hash; httpOnly session cookie (SameSite; expiry);
+middleware guarding all admin routes and all write endpoints; logout.
+Requirements: admin route names leak nothing in HTML/JS bundles; failed
+logins rate-limited; session invalidation on logout.
+Completion criteria: unauthenticated access to any admin route blocked;
+valid login succeeds; rate limiting demonstrated; HYDRA-verified.
+
+## Phase 5 — Owner Dashboard — ⚪ NOT STARTED (executed as 5A / 5B)
+Objective: full owner control over the public site, without code or
+redeploys.
+Phase 5A — Content & What’s New: edit hero/tagline/section copy overrides;
+show/hide toggles per landing section; CTA button management; full CRUD
+for What’s New entries with type tags and publish state.
+Phase 5B — Appearance & Media: accent theme selection (locked to brand
+palette); animation toggles (hex field ignition, reticle rotation,
+shockwave) and intensity; image uploads with sizing/position controls and
+alt text (Vercel Blob or JP-approved alternative); preview before publish.
+Expected output: dashboard changes visibly alter the public landing after
+publish, no redeploy.
+Requirements: server-side validation of every setting; unknown/invalid
+config values fall back to safe defaults; every write endpoint behind
+owner auth; audit trail of changes (who/when/what).
+Completion criteria: each module demonstrated end to end (change →
+publish → visible on public site); failure states safe; HYDRA-verified;
+dashboard README created, marked DONE after verification.
+
+## Phase 6 — Integration — ⚪ NOT STARTED
+Objective: public site renders live from the Backend — data AND
+configuration — UI craft untouched.
+Implementation: frontend data layer fetches from the API (base URL via
+env); landing renders per site_config with graceful built-in defaults;
+What’s New, Hub and Stats from API; loading/error/empty states in brand
+voice; hardcoded content remains only where it is identity copy.
+Expected output: PostgreSQL + site_config are the single source of truth
+for everything dynamic.
+Dependencies: Phases 2, 3 (and 5 for config rendering).
+Completion criteria: all dynamic views render API data locally; config
+changes propagate without redeploy; no visual regressions; HYDRA-verified.
+
+## Phase 7 — Deployment — ⚪ NOT STARTED
+Implementation: Frontend → Vercel (Root Directory: Frontend); Backend →
+Render (Root Directory: Backend); database → Neon; object storage live;
+all env vars set in platform dashboards — never in the repo; CORS
+tightened to production origins; ADMIN_PATH set in production env.
+Completion criteria: both deployments live and healthy over public URLs;
+HYDRA verifies through the public URLs.
+
+## Phase 8 — Domain — ⚪ NOT STARTED
+Implementation: apex + www → Vercel; API subdomain → Render; SSL
+provisioned; production API base URL updated.
+Completion criteria: https://vortexsdu.com serves all three views; API
+reachable on its subdomain; admin entrance verified over HTTPS; HYDRA-
+verified.
+
+---
+
+*Less friction. More momentum.*
