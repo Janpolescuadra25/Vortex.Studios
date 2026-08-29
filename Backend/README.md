@@ -8,9 +8,9 @@ Node 22 · TypeScript · Express 5 (Phase 3B) · Prisma 6 · PostgreSQL
 (local 18.1 dev · Neon production).
 
 ## Status
-Part A complete — database layer (schema, migrations, canonical seed
-v2, self-healing). API endpoints land in Phase 3B. Awaiting HYDRA
-verification.
+Part A — database layer (schema, migrations, canonical seed v2,
+self-healing) — ✅ HYDRA-verified complete.
+Part B — API endpoints — next (Phase 3B).
 
 ## Data models
 Product (lane, status, date, description, sortOrder) · ChangelogEntry
