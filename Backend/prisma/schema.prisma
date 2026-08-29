@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Lane {
+  ACCOUNTING
+  AUTOMATION
+  SOCIAL
+  ECOMMERCE
+  GAMES
+}
+
+enum ProductStatus {
+  LIVE
+  IN_DEVELOPMENT
+  PLANNED
+  CONCEPT
+}
+
+enum ChangelogType {
+  LAUNCH
+  UPDATE
+  ANNOUNCEMENT
+  MILESTONE
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  lane        Lane
+  status      ProductStatus
+  date        DateTime?
+  description String
+  sortOrder   Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model ChangelogEntry {
+  id        String        @id @default(cuid())
+  type      ChangelogType
+  date      DateTime
+  title     String
+  body      String
+  published Boolean       @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model SiteConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  data      Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OwnerAccount {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  mimeType  String
+  size      Int
+  url       String
+  alt       String?
+  placement String?
+  meta      Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
