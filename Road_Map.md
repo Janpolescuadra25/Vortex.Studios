@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 1B completed · Phase 2 next — Phases 3–8 not started
+**Current position:** Phase 2.1 completed · Phase 3 next — Phases 4–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -33,44 +33,25 @@ aid tracking.
 - Root documentation: .gitignore, README.md, Road_Map.md created and
   HYDRA-verified; Frontend/ and Backend/ established with .gitkeep
   files. History: commit 4136936.
+- Tooling & git bootstrap: bun 1.4.0; repo-local git identity; first
+  push landed after remote verification gate (commits 4136936–28f5edd).
 
-## Phase 1B — Tooling & Git Bootstrap — ✅ COMPLETED
-Objective: version control and first push to GitHub.
-Implementation: install bun (official PowerShell installer — absence
-verified by probe; required by reference's bun.lock); configure git
-identity repo-local (values supplied by JP); git init -b main; remote
-origin → https://github.com/Janpolescuadra25/Vortex.Studios.git; verify
-git status shows only the five Phase 1A files → commit →
-git push -u origin main.
-Expected output: initialized repo on main; first commit pushed; clean tree.
-Requirements: .gitignore present before first commit; no force push; hard
-stops on auth failure or non-fast-forward rejection.
-Dependencies: Phase 1A complete; JP supplies git identity; GitHub
-credentials available on host.
-Completion criteria: initial commit on main; push verified by HYDRA;
-GitHub repo shows the files.
-Completion record: HYDRA-verified complete — bun 1.4.0 installed;
-repo-local identity configured; commit 4136936 (five files) pushed
-with --force-with-lease after remote verification gate passed
-(remote contained only an auto-generated README). GitHub main
-matches local main; working tree clean.
+## Phase 2 — Frontend Establishment — ✅ COMPLETED
+Objective: the reference UI ported into Frontend/, visually
+unmodified; public site only.
+Completion record: HYDRA-verified complete — reference UI ported
+with the exclusion list enforced (no .env, prisma/, db/, reference
+metadata); 818 dependencies installed via bun; three URL entry
+points (/, /the-hub, /whats-new) verified serving with zero
+database dependencies; Frontend/README.md documents structure,
+decisions and run instructions.
 
-## Phase 2 — Frontend Establishment — ⚪ NOT STARTED
-Objective: the reference UI, running in Frontend/, visually unmodified —
-public site only, no admin surface yet.
-Implementation: copy reference source into Frontend/ using the exclusion
-list verified by audit (.git, node_modules, .next, .env and all .env
-variants, *.db, caches); install dependencies with bun; resolve any
-database-dependent module per audit findings, using local PostgreSQL for
-development if required; run dev server; verify all three views.
-Expected output: Frontend/ is a complete, running Next.js app with the
-reference UI intact.
-Requirements: visual parity with reference; content diffed against the
-canonical brief — brief wins on factual mismatch; no reference-only
-secrets copied.
-Completion criteria: dev server serves localhost:3000; Landing (/),
-The Hub (/the-hub) and What's New (/whats-new) render without errors;
-HYDRA-verified; Frontend/README.md created, marked DONE after verification.
+## Phase 2.1 — Shell unification — ✅ COMPLETED
+Objective: one shared SPA shell behind the three route entry points.
+Completion record: HYDRA-verified complete — duplicated shells
+extracted into src/components/vortex/vortex-app-shell.tsx
+(initialView prop); three thin route pages; routes re-verified;
+commit a9772d6 pushed; working tree clean.
 
 ## Phase 3 — Backend Foundation — ⚪ NOT STARTED
 Objective: API service powering The Hub, What's New, Stats AND the site

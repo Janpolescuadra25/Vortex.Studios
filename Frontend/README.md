@@ -35,4 +35,4 @@ navigation switches views client-side; the URL reflects the entry
 point. This replaces the Phase 2 wrapper duplication.
 
 ## Status
-Implemented — awaiting HYDRA verification.
+✅ DONE — Phase 2/2.1 verified by HYDRA.
