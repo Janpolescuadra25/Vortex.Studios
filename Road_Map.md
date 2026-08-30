@@ -70,7 +70,9 @@ middleware (secret path rewrite, direct /owner-console 404s), noindex
 console with login/logout wired to /api/auth (credentials included),
 bundle leak gate passed; commit 98e2618; verification suite confirmed
 hash, remote equality, and the full matrix. JP browser acceptance
-pending as the final human gate.
+COMPLETE — login, console, logout and the direct
+/owner-console 404 all verified by JP in-browser. Phase 4
+fully certified.
 
 ## Phase 5 — Owner Dashboard — ⚪ NOT STARTED (executed as 5A / 5B)
 Objective: full owner control over the public site, without code or
