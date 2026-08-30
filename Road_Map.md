@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 4A completed · Phase 4B next — Phases 5–8 not started
+**Current position:** Phase 4 completed · Phase 5A next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -35,60 +35,22 @@ aid tracking.
   files. History: commit 4136936.
 - Tooling & git bootstrap: bun 1.4.0; repo-local git identity; first
   push landed after remote verification gate (commits 4136936–28f5edd).
+- Phase 2 / 2.1 — Frontend: reference UI ported (818 deps via bun,
+  exclusion list enforced); three URL entry points (/, /the-hub,
+  /whats-new) verified; SPA shell unified into
+  vortex-app-shell.tsx. History: 15b2845, a9772d6.
+- Phase 3 — Backend foundation: Prisma + PostgreSQL (vortex_db);
+  canonical self-healing seed (9 products, 5 changelog entries);
+  Express API — /health, /api/products, /api/changelog, /api/stats,
+  /api/site-config + CORS; twelve-case matrix. History: 1421235,
+  d9fe3ab.
+- Phase 4 — Owner authentication: 4A backend auth (bcrypt,
+  rate-limited login, httpOnly JWT cookie, requireOwner guard;
+  secrets rotated after an exposure incident — logged) + 4B hidden
+  entrance (ADMIN_PATH middleware, noindex console, bundle leak
+  gate). History: 0ba4c1a, 98e2618.
 
-## Phase 2 — Frontend Establishment — ✅ COMPLETED
-Objective: the reference UI ported into Frontend/, visually
-unmodified; public site only.
-Completion record: HYDRA-verified complete — reference UI ported
-with the exclusion list enforced (no .env, prisma/, db/, reference
-metadata); 818 dependencies installed via bun; three URL entry
-points (/, /the-hub, /whats-new) verified serving with zero
-database dependencies; Frontend/README.md documents structure,
-decisions and run instructions.
-
-## Phase 2.1 — Shell unification — ✅ COMPLETED
-Objective: one shared SPA shell behind the three route entry points.
-Completion record: HYDRA-verified complete — duplicated shells
-extracted into src/components/vortex/vortex-app-shell.tsx
-(initialView prop); three thin route pages; routes re-verified;
-commit a9772d6 pushed; working tree clean.
-
-## Phase 3 — Backend Foundation — ✅ COMPLETED
-Objective: API service powering The Hub, What's New, Stats AND the site
-configuration that the Owner Dashboard will later manage.
-Implementation: Node.js HTTP API in Backend/ (framework finalized in
-Phase 3 planning) + Prisma ORM. Data models: products (name, lane, status,
-date, description); changelog entries (type: launch / update /
-announcement / milestone; date; body); site_config (JSON document per
-landing section — content overrides, section visibility, appearance
-settings); owner_account (email, password_hash ONLY — no plaintext,
-ever); media (metadata; binary lives in object storage, decision pending:
-recommended Vercel Blob). Database: local PostgreSQL development /
-Neon production — same schema, env-switched. Public endpoints (minimum):
-GET /health · GET /api/products (status/lane filters) · GET /api/changelog
-· GET /api/stats · GET /api/site-config (public view; falls back to
-built-in defaults when unconfigured). Seed script loads the canonical
-lineup and changelog from the brief timeline. CORS restricted to known
-frontend origins. .env.example documents every key name (values set by
-JP only). Dependencies: Phase 1B; local PostgreSQL service status
-confirmed by audit; Neon account.
-Completion criteria: endpoints return valid canonical data against the
-local database; empty site_config falls back to defaults; migrations
-reproducible from scratch; HYDRA-verified; Backend/README.md created,
-marked DONE after verification.
-Completion record (3A): HYDRA-verified complete — Prisma schema
-migrated; canonical self-healing seed v2 converged (9 products, 5
-changelog entries; 9 non-canonical rows purged); Backend/README.md
-created; committed and pushed. 3B (API endpoints) pending.
-Completion record (3B-1): HYDRA-verified complete — Express server
-live on port 4000; /health + /api/products with status/lane filters;
-six-case matrix passing; commit 1421235.
-Completion record (3B-2): HYDRA-verified complete — /api/changelog
-(+type filter), /api/stats, /api/site-config with defaults fallback,
-CORS restricted to configured origin; twelve-case matrix passing;
-Phase 3 fully delivered.
-
-## Phase 4 — Owner Authentication — 🔄 IN PROGRESS (4A backend auth complete · 4B hidden entrance next)
+## Phase 4 — Owner Authentication — ✅ COMPLETED
 Objective: a hidden, authenticated entrance for the studio owner only.
 Implementation: admin path segment sourced from env (ADMIN_PATH) — never
 hardcoded, never linked from public pages, noindex, excluded from
@@ -103,6 +65,12 @@ Completion record (4A): HYDRA-verified complete — hidden owner login
 path with env-sourced ADMIN_PATH, bcrypt-backed credentials, rate-limited
 failed login handling, httpOnly session cookie, owner auth guard, and
 logout.
+Completion record (4B): HYDRA-verified complete — ADMIN_PATH
+middleware (secret path rewrite, direct /owner-console 404s), noindex
+console with login/logout wired to /api/auth (credentials included),
+bundle leak gate passed; commit 98e2618; verification suite confirmed
+hash, remote equality, and the full matrix. JP browser acceptance
+pending as the final human gate.
 
 ## Phase 5 — Owner Dashboard — ⚪ NOT STARTED (executed as 5A / 5B)
 Objective: full owner control over the public site, without code or
