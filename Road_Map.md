@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 4A completed · Phase 5 next — Phases 5–8 not started
+**Current position:** Phase 4A completed · Phase 4B next — Phases 5–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -88,7 +88,7 @@ Completion record (3B-2): HYDRA-verified complete — /api/changelog
 CORS restricted to configured origin; twelve-case matrix passing;
 Phase 3 fully delivered.
 
-## Phase 4 — Owner Authentication — ✅ COMPLETED
+## Phase 4 — Owner Authentication — 🔄 IN PROGRESS (4A backend auth complete · 4B hidden entrance next)
 Objective: a hidden, authenticated entrance for the studio owner only.
 Implementation: admin path segment sourced from env (ADMIN_PATH) — never
 hardcoded, never linked from public pages, noindex, excluded from
