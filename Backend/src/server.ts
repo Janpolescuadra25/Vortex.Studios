@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import { PrismaClient, Lane, ProductStatus, ChangelogType } from "@prisma/client";
+import { createAuthRouter } from "./auth.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -9,7 +10,7 @@ const PORT = Number(process.env.PORT ?? 4000);
 const CORS_ORIGIN = process.env.CORS_ORIGIN ?? "http://localhost:3000";
 
 app.use(morgan("dev"));
-app.use(cors({ origin: CORS_ORIGIN }));
+app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 
 const LANES: string[] = ["ACCOUNTING", "AUTOMATION", "SOCIAL", "ECOMMERCE", "GAMES"];
@@ -24,6 +25,8 @@ const SITE_CONFIG_DEFAULTS: Record<string, unknown> = {
 app.get("/health", (_req, res) => {
   res.json({ status: "ok", service: "vortex-backend", time: new Date().toISOString() });
 });
+
+app.use("/api/auth", createAuthRouter());
 
 app.get("/api/products", async (req, res, next) => {
   try {
