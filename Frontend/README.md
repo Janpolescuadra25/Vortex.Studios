@@ -34,5 +34,17 @@ view switching, cinematic transitions, initialView prop). In-app
 navigation switches views client-side; the URL reflects the entry
 point. This replaces the Phase 2 wrapper duplication.
 
+## Phase 4B — Hidden owner entrance
+The owner console lives behind a secret URL segment (ADMIN_PATH,
+server-side only). Middleware (src/middleware.ts) rewrites
+/<ADMIN_PATH> to the internal /owner-console route and 404s any
+direct access to the internal path; the segment never enters the
+client bundle; the page is noindex. The console probes
+/api/auth/session, logs in against /api/auth/login (credentials
+included), and shows a minimal shell (logout + Phase 5 module
+placeholders). Run: bun install not required (no new deps);
+bunx next dev -p 3000 with Backend running on 4000.
+Implemented — awaiting HYDRA verification.
+
 ## Status
 ✅ DONE — Phase 2/2.1 verified by HYDRA.
