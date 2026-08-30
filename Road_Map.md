@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 3A completed · Phase 3B next — Phases 4–8 not started
+**Current position:** Phase 4A completed · Phase 5 next — Phases 5–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -88,7 +88,7 @@ Completion record (3B-2): HYDRA-verified complete — /api/changelog
 CORS restricted to configured origin; twelve-case matrix passing;
 Phase 3 fully delivered.
 
-## Phase 4 — Owner Authentication — ⚪ NOT STARTED
+## Phase 4 — Owner Authentication — ✅ COMPLETED
 Objective: a hidden, authenticated entrance for the studio owner only.
 Implementation: admin path segment sourced from env (ADMIN_PATH) — never
 hardcoded, never linked from public pages, noindex, excluded from
@@ -99,6 +99,10 @@ Requirements: admin route names leak nothing in HTML/JS bundles; failed
 logins rate-limited; session invalidation on logout.
 Completion criteria: unauthenticated access to any admin route blocked;
 valid login succeeds; rate limiting demonstrated; HYDRA-verified.
+Completion record (4A): HYDRA-verified complete — hidden owner login
+path with env-sourced ADMIN_PATH, bcrypt-backed credentials, rate-limited
+failed login handling, httpOnly session cookie, owner auth guard, and
+logout.
 
 ## Phase 5 — Owner Dashboard — ⚪ NOT STARTED (executed as 5A / 5B)
 Objective: full owner control over the public site, without code or

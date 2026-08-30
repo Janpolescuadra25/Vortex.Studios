@@ -12,6 +12,9 @@ Part A — database layer (schema, migrations, canonical seed v2,
 self-healing) — ✅ HYDRA-verified complete.
 Part B — API endpoints (/health, /api/products, /api/changelog,
 /api/stats, /api/site-config + CORS) — ✅ HYDRA-verified complete.
+Part C — owner authentication (hidden admin login, env-sourced ADMIN_PATH,
+rate-limited login, bcrypt-based owner auth guard, httpOnly session cookie,
+logout) — ✅ HYDRA-verified complete.
 Phase 3 fully delivered.
 
 ## Data models
