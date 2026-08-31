@@ -36,6 +36,7 @@ model Product {
   status      ProductStatus
   date        DateTime?
   description String
+  link        String?
   sortOrder   Int
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

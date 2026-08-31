@@ -17,6 +17,14 @@ rate-limited login, bcrypt-based owner auth guard, httpOnly session cookie,
 logout) — ✅ HYDRA-verified complete.
 Phase 3 fully delivered.
 
+## Phase 5A-1 — Product link field
+Migration add_product_link adds an optional `link` (String?) to
+Product — the foundation for clickable product cards and the
+dashboard Products editor. The seed intentionally does NOT touch
+`link`: dashboard-entered links survive reseeding (upsert updates
+lane/status/date/description/sortOrder only).
+Implemented — awaiting HYDRA verification.
+
 ## Data models
 Product (lane, status, date, description, sortOrder) · ChangelogEntry
 (type, date, title, body, published) · SiteConfig (key + JSON document)
