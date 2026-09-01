@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import { PrismaClient, Lane, ProductStatus, ChangelogType } from "@prisma/client";
 import { createAuthRouter } from "./auth.js";
+import { createProductsAdminRouter } from "./products-admin.js";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -27,6 +28,7 @@ app.get("/health", (_req, res) => {
 });
 
 app.use("/api/auth", createAuthRouter());
+app.use("/api/admin/products", createProductsAdminRouter());
 
 app.get("/api/products", async (req, res, next) => {
   try {
