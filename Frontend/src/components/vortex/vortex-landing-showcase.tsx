@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { PRODUCTS, STATUS_META } from "@/lib/vortex-data";
+import { STATUS_META } from "@/lib/vortex-data";
+import { useLiveProducts } from "@/lib/use-live-products";
 import { VortexMark } from "./vortex-logo";
 import { EASE, FadeUp, MaskedLine, SectionTag, Magnetic } from "./vortex-shared";
 
@@ -11,9 +12,10 @@ import { EASE, FadeUp, MaskedLine, SectionTag, Magnetic } from "./vortex-shared"
 /* FEATURED — a magazine spread of the flagship drops                  */
 /* ================================================================== */
 export function FeaturedTeaser({ onEnterHub }: { onEnterHub: () => void }) {
-  const featured = PRODUCTS.filter(
-    (p) => p.status === "live" || p.status === "development"
-  ).slice(0, 3);
+  const { products } = useLiveProducts();
+  const featured = products
+    .filter((p) => p.status === "live" || p.status === "development")
+    .slice(0, 3);
 
   return (
     <section className="relative mx-auto max-w-7xl px-6 py-28 sm:py-36">
@@ -43,73 +45,92 @@ export function FeaturedTeaser({ onEnterHub }: { onEnterHub: () => void }) {
 
       {/* cards */}
       <div className="grid gap-6 md:grid-cols-3">
-        {featured.map((p, i) => (
-          <motion.article
-            key={p.id}
-            initial={{ opacity: 0, y: 36 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 1, delay: i * 0.12, ease: EASE }}
-            className="group flex flex-col overflow-hidden rounded-[1.75rem] border hairline bg-white/85 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-editorial-lg"
-          >
-            {/* thumb — quiet CSS art: pale wash + drifting ring + mark */}
-            <div
-              className="relative h-52 overflow-hidden"
-              style={{
-                background: `linear-gradient(150deg, ${p.hue[0]}12, ${p.hue[1]}1f)`,
-              }}
+        {featured.map((p, i) => {
+          const card = (
+            <motion.article
+              key={p.id}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.35 }}
+              transition={{ duration: 1, delay: i * 0.12, ease: EASE }}
+              className="group flex flex-col overflow-hidden rounded-[1.75rem] border hairline bg-white/85 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-editorial-lg"
             >
+              {/* thumb — quiet CSS art: pale wash + drifting ring + mark */}
               <div
-                className="absolute -right-16 -top-20 h-56 w-56 rounded-full border hairline opacity-60 transition-transform duration-[1200ms] ease-out group-hover:rotate-45 group-hover:scale-110"
+                className="relative h-52 overflow-hidden"
                 style={{
-                  borderColor: `${p.hue[1]}30`,
-                  background: `radial-gradient(closest-side, ${p.hue[1]}14, transparent 70%)`,
+                  background: `linear-gradient(150deg, ${p.hue[0]}12, ${p.hue[1]}1f)`,
                 }}
-              />
-              <div
-                className="absolute -bottom-24 -left-14 h-48 w-48 rounded-full border hairline opacity-50 transition-transform duration-[1200ms] ease-out group-hover:-rotate-30 group-hover:scale-105"
-                style={{ borderColor: `${p.hue[0]}28` }}
-              />
-              <span className="label-editorial absolute left-6 top-6 text-[10px] text-vortex-ink/45">
-                {String(i + 1).padStart(2, "0")} — {p.category}
-              </span>
-              <span
-                className={`label-editorial absolute right-5 top-5 rounded-full px-3 py-1.5 text-[9px] ${STATUS_META[p.status].chip}`}
               >
-                {STATUS_META[p.status].label}
-              </span>
-              <div className="absolute bottom-5 right-6 grid h-12 w-12 place-items-center rounded-full bg-white/80 text-vortex-ink shadow-editorial backdrop-blur transition-all duration-500 group-hover:bg-vortex-ink group-hover:text-white">
-                <p.icon className="h-5 w-5" strokeWidth={1.6} />
+                <div
+                  className="absolute -right-16 -top-20 h-56 w-56 rounded-full border hairline opacity-60 transition-transform duration-[1200ms] ease-out group-hover:rotate-45 group-hover:scale-110"
+                  style={{
+                    borderColor: `${p.hue[1]}30`,
+                    background: `radial-gradient(closest-side, ${p.hue[1]}14, transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute -bottom-24 -left-14 h-48 w-48 rounded-full border hairline opacity-50 transition-transform duration-[1200ms] ease-out group-hover:-rotate-30 group-hover:scale-105"
+                  style={{ borderColor: `${p.hue[0]}28` }}
+                />
+                <span className="label-editorial absolute left-6 top-6 text-[10px] text-vortex-ink/45">
+                  {String(i + 1).padStart(2, "0")} — {p.category}
+                </span>
+                <span
+                  className={`label-editorial absolute right-5 top-5 rounded-full px-3 py-1.5 text-[9px] ${STATUS_META[p.status].chip}`}
+                >
+                  {STATUS_META[p.status].label}
+                </span>
+                <div className="absolute bottom-5 right-6 grid h-12 w-12 place-items-center rounded-full bg-white/80 text-vortex-ink shadow-editorial backdrop-blur transition-all duration-500 group-hover:bg-vortex-ink group-hover:text-white">
+                  <p.icon className="h-5 w-5" strokeWidth={1.6} />
+                </div>
               </div>
-            </div>
 
-            {/* body */}
-            <div className="flex flex-1 flex-col p-7">
-              <h3 className="font-display text-2xl font-semibold tracking-tight text-vortex-ink transition-colors duration-500 group-hover:text-vortex-teal">
-                {p.name}
-              </h3>
-              <p className="mt-1.5 font-serif-accent text-lg italic leading-snug text-vortex-navy/60">
-                {p.tagline}
-              </p>
-              <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-vortex-navy/70">
-                {p.description}
-              </p>
-              <div className="mt-auto flex items-center justify-between border-t hairline pt-5">
-                <span className="label-editorial text-[10px] text-vortex-ink/45">
-                  {p.eta ??
-                    new Date(p.releasedAt).toLocaleDateString("en-US", {
-                      month: "short",
-                      year: "numeric",
-                    })}
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-display text-[13px] font-semibold text-vortex-teal">
-                  {p.status === "live" ? "In the Hub" : "On the roadmap"}
-                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </span>
+              {/* body */}
+              <div className="flex flex-1 flex-col p-7">
+                <h3 className="font-display text-2xl font-semibold tracking-tight text-vortex-ink transition-colors duration-500 group-hover:text-vortex-teal">
+                  {p.name}
+                </h3>
+                <p className="mt-1.5 font-serif-accent text-lg italic leading-snug text-vortex-navy/60">
+                  {p.tagline}
+                </p>
+                <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-vortex-navy/70">
+                  {p.description}
+                </p>
+                <div className="mt-auto flex items-center justify-between border-t hairline pt-5">
+                  <span className="label-editorial text-[10px] text-vortex-ink/45">
+                    {p.eta ??
+                      new Date(p.releasedAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        year: "numeric",
+                      })}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 font-display text-[13px] font-semibold text-vortex-teal">
+                    {p.status === "live"
+                      ? p.link
+                        ? "Visit site"
+                        : "In the Hub"
+                      : "On the roadmap"}
+                    <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </span>
+                </div>
               </div>
-            </div>
-          </motion.article>
-        ))}
+            </motion.article>
+          );
+          return p.link ? (
+            <a
+              key={p.id}
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block"
+            >
+              {card}
+            </a>
+          ) : (
+            card
+          );
+        })}
       </div>
     </section>
   );
