@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A-3 complete · Incidents #4/#4b remediated (two rotations; allowlist rule permanent) · build blocker parked (dev-mode fork active) · Phase 5A-3b next — Phases 5B–8 not started
+**Current position:** Phase 5A-3/3b complete (landing + Hub live, links unified; JP accepted) · Incidents #5/#6/#7 remediated (password rotated; .env-only startup rule) · build blocker parked · Phase 5A-4 next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -116,6 +116,20 @@ pattern-only .env access; display = STOP. Owner password retained
 per owner ruling (chat exposure accepted; agents still never hold
 it). Functional proof of the current secrets: JP's masked login in
 5A-3b's matrix.
+
+Security record (Incidents #5/#6/#7): during the 5A-3b matrix,
+ADMIN_PATH was exposed in chat, the owner password was typed into a
+plain-text command, and the backend was started with inline env
+overrides bypassing .env. Remediated: owner password rotated via
+masked input (rotation 3); .env-only startup rule made permanent;
+mask-input-then-discard pattern reaffirmed. Functional proof: JP's
+masked login with the new credential.
+
+Completion record (5A-3b): HYDRA-verified complete — the Hub live
+via useLiveProducts (shared hook, derived counts, unified clickable
+links, static fallback on both views); commit 7515b55. JP browser
+acceptance COMPLETE (this commit cycle) — landing + Hub verified
+in-browser by JP.
 
 ## Phase 6 — Integration — ⚪ NOT STARTED
 Objective: public site renders live from the Backend — data AND
