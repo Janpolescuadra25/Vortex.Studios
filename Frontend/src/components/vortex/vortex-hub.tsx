@@ -14,14 +14,12 @@ import {
 } from "lucide-react";
 import {
   CATEGORIES,
-  PRODUCTS,
   STATUS_META,
   STATUS_ORDER,
-  LIVE_COUNT,
-  PIPELINE_COUNT,
   type Category,
   type Product,
 } from "@/lib/vortex-data";
+import { useLiveProducts } from "@/lib/use-live-products";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -121,20 +119,32 @@ function HubCard({ product, index }: { product: Product; index: number }) {
                 year: "numeric",
               })}
           </span>
-          <button
-            onClick={() =>
-              toast({
-                title: isLive ? `${product.name} — demo link` : `${product.name} — in the pipeline`,
-                description: isLive
-                  ? "This hub is a live preview — public product links arrive at launch."
-                  : `Target: ${product.eta}. Follow the changelog for launch news.`,
-              })
-            }
-            className="inline-flex items-center gap-1.5 font-display text-[13px] font-semibold text-vortex-teal transition-colors hover:text-vortex-deep focus-visible:outline-2 focus-visible:outline-vortex-teal"
-          >
-            {isLive ? "Visit product" : "Follow progress"}
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-          </button>
+          {product.link ? (
+            <a
+              href={product.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-display text-[13px] font-semibold text-vortex-teal transition-colors hover:text-vortex-deep focus-visible:outline-2 focus-visible:outline-vortex-teal"
+            >
+              {isLive ? "Visit product" : "Follow progress"}
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          ) : (
+            <button
+              onClick={() =>
+                toast({
+                  title: isLive ? `${product.name} — in the Hub` : `${product.name} — in the pipeline`,
+                  description: isLive
+                    ? "Public product site coming soon."
+                    : `Target: ${product.eta}. Follow the changelog for launch news.`,
+                })
+              }
+              className="inline-flex items-center gap-1.5 font-display text-[13px] font-semibold text-vortex-teal transition-colors hover:text-vortex-deep focus-visible:outline-2 focus-visible:outline-vortex-teal"
+            >
+              {isLive ? "Visit product" : "Follow progress"}
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </button>
+          )}
         </div>
       </div>
     </motion.article>
@@ -149,9 +159,10 @@ export function VortexHub({ onGoHome }: { onGoHome: () => void }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>("All");
   const [sort, setSort] = useState<SortKey>("status");
+  const { products } = useLiveProducts();
 
   const results = useMemo(() => {
-    let list = [...PRODUCTS];
+    let list = [...products];
     if (filter !== "All") list = list.filter((p) => p.category === filter);
     const q = query.trim().toLowerCase();
     if (q) {
@@ -203,7 +214,7 @@ export function VortexHub({ onGoHome }: { onGoHome: () => void }) {
             The <span className="text-vortex-gradient">Vortex Hub</span>
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-vortex-navy/70">
-            {LIVE_COUNT} products live, {PIPELINE_COUNT} more spinning — accounting,
+            {products.filter((p) => p.status === "live").length} products live, {products.filter((p) => p.status !== "live").length} more spinning — accounting,
             automation, social, e-commerce and games. Every one of them built by{" "}
             <span className="font-medium text-vortex-ink">Vortex Studios</span>.
           </p>
@@ -216,13 +227,13 @@ export function VortexHub({ onGoHome }: { onGoHome: () => void }) {
           transition={{ delay: 0.25, duration: 0.7 }}
         >
           <span className="inline-flex items-center gap-2">
-            <LayoutGrid className="h-4 w-4 text-vortex-teal" /> {PRODUCTS.length} products
+            <LayoutGrid className="h-4 w-4 text-vortex-teal" /> {products.length} products
           </span>
           <span className="inline-flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-vortex-teal" /> {LIVE_COUNT} live
+            <Sparkles className="h-4 w-4 text-vortex-teal" /> {products.filter((p) => p.status === "live").length} live
           </span>
           <span className="inline-flex items-center gap-2">
-            <Rocket className="h-4 w-4 text-vortex-teal" /> {PIPELINE_COUNT} in the pipeline
+            <Rocket className="h-4 w-4 text-vortex-teal" /> {products.filter((p) => p.status !== "live").length} in the pipeline
           </span>
         </motion.div>
       </div>
@@ -270,7 +281,7 @@ export function VortexHub({ onGoHome }: { onGoHome: () => void }) {
         <div className="no-scrollbar mt-3 flex gap-2 overflow-x-auto pb-1">
           {(["All", ...CATEGORIES.map((c) => c.name)] as Filter[]).map((cat) => {
             const active = filter === cat;
-            const count = cat === "All" ? PRODUCTS.length : PRODUCTS.filter((p) => p.category === cat).length;
+            const count = cat === "All" ? products.length : products.filter((p) => p.category === cat).length;
             return (
               <button
                 key={cat}
