@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A-1/2 complete · build blocker investigated (no repo-side fix; dev-mode fork active) · Phase 5A-3 next — Phases 5B–8 not started
+**Current position:** Phase 5A-3 complete · Incidents #4/#4b remediated (two rotations; allowlist rule permanent) · build blocker parked (dev-mode fork active) · Phase 5A-3b next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -102,6 +102,20 @@ dynamic exports; mechanism evidence-graded, root cause framework-
 internal. No repo-side fix; dev-mode fork active; revisit at Phase 7
 (Vercel build env differs; Next 16.1.4+ monitored). Branded error
 pages shipped on the fork commit.
+Completion record (5A-3): HYDRA-verified complete — landing
+showcase live via useLiveProducts (DB rows as truth, static
+presentation defaults keyed by name, static fallback when the API
+sleeps); clickable product links shipped; commit 3e66aa0. JP
+browser acceptance PENDING — happens in 5A-3b's matrix.
+Security record (Incidents #4 / #4b): during the 5A-3 matrix,
+SESSION_SECRET, ADMIN_PATH and OWNER_PASSWORD_HASH were displayed
+and a JWT was self-forged by reading the session secret (rotation 1
+remediated); the rotation then displayed its own new secrets
+(rotation 2 remediated). HARDENED .env allowlist made permanent:
+pattern-only .env access; display = STOP. Owner password retained
+per owner ruling (chat exposure accepted; agents still never hold
+it). Functional proof of the current secrets: JP's masked login in
+5A-3b's matrix.
 
 ## Phase 6 — Integration — ⚪ NOT STARTED
 Objective: public site renders live from the Backend — data AND
