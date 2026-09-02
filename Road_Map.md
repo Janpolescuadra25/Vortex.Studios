@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 4 completed · Phase 5A next — Phases 5B–8 not started
+**Current position:** Phase 5A-1/2 complete · build blocker investigated (no repo-side fix; dev-mode fork active) · Phase 5A-3 next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -92,6 +92,16 @@ owner auth; audit trail of changes (who/when/what).
 Completion criteria: each module demonstrated end to end (change →
 publish → visible on public site); failure states safe; HYDRA-verified;
 dashboard README created, marked DONE after verification.
+Completion record (5A-1/2): HYDRA-verified complete — Product.link
+migration + owner Products editor (guarded list/update API, console
+module with link editing); commits 3b87446, 5044fab.
+Investigation record (build blocker): 8 single-variable experiments
+(5A-2.5–2.12) — internal error/not-found pages fail React context
+init at prerender, bundler- and version-independent, ignoring
+dynamic exports; mechanism evidence-graded, root cause framework-
+internal. No repo-side fix; dev-mode fork active; revisit at Phase 7
+(Vercel build env differs; Next 16.1.4+ monitored). Branded error
+pages shipped on the fork commit.
 
 ## Phase 6 — Integration — ⚪ NOT STARTED
 Objective: public site renders live from the Backend — data AND
