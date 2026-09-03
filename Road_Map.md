@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A-3/3b complete (landing + Hub live, links unified; JP accepted) · Incidents #5/#6/#7 remediated (password rotated; .env-only startup rule) · build blocker parked · Phase 5A-4 next — Phases 5B–8 not started
+**Current position:** Phase 5A content complete (5A-1/2/3/3b) · Incidents #4–#7 recorded and remediated · build blocker parked · Phase 5A-4 next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -74,7 +74,7 @@ COMPLETE — login, console, logout and the direct
 /owner-console 404 all verified by JP in-browser. Phase 4
 fully certified.
 
-## Phase 5 — Owner Dashboard — ⚪ NOT STARTED (executed as 5A / 5B)
+## Phase 5 — Owner Dashboard — 🔄 IN PROGRESS (5A content units complete · 5B appearance/media pending)
 Objective: full owner control over the public site, without code or
 redeploys.
 Phase 5A — Content & What’s New: edit hero/tagline/section copy overrides;
@@ -106,7 +106,9 @@ Completion record (5A-3): HYDRA-verified complete — landing
 showcase live via useLiveProducts (DB rows as truth, static
 presentation defaults keyed by name, static fallback when the API
 sleeps); clickable product links shipped; commit 3e66aa0. JP
-browser acceptance PENDING — happens in 5A-3b's matrix.
+browser acceptance COMPLETE — landing showcase, clickable
+link, and dashboard login verified in-browser by JP (recorded
+at the 5A-CERTIFY commit).
 Security record (Incidents #4 / #4b): during the 5A-3 matrix,
 SESSION_SECRET, ADMIN_PATH and OWNER_PASSWORD_HASH were displayed
 and a JWT was self-forged by reading the session secret (rotation 1
@@ -145,16 +147,19 @@ Completion criteria: all dynamic views render API data locally; config
 changes propagate without redeploy; no visual regressions; HYDRA-verified.
 
 ## Phase 7 — Deployment — ⚪ NOT STARTED
-Implementation: Frontend → Vercel (Root Directory: Frontend); Backend →
-Render (Root Directory: Backend); database → Neon; object storage live;
-all env vars set in platform dashboards — never in the repo; CORS
-tightened to production origins; ADMIN_PATH set in production env.
+Implementation: Frontend → Render (Root Directory: Frontend); Backend →
+Render (Root Directory: Backend); database → Neon (connection string in
+Render env vars only); object storage decision at 5B; all env vars set in
+platform dashboards — never in the repo; CORS tightened to production
+origins; ADMIN_PATH set in production env; production build blocker
+revisited at this phase (Render build env differs; Next 16.1.4+
+monitored).
 Completion criteria: both deployments live and healthy over public URLs;
 HYDRA verifies through the public URLs.
 
 ## Phase 8 — Domain — ⚪ NOT STARTED
-Implementation: apex + www → Vercel; API subdomain → Render; SSL
-provisioned; production API base URL updated.
+Implementation: apex + www → Render (frontend); API subdomain → Render
+(backend); SSL provisioned; production API base URL updated.
 Completion criteria: https://vortexsdu.com serves all three views; API
 reachable on its subdomain; admin entrance verified over HTTPS; HYDRA-
 verified.

@@ -46,5 +46,14 @@ placeholders). Run: bun install not required (no new deps);
 bunx next dev -p 3000 with Backend running on 4000.
 Implemented — awaiting HYDRA verification.
 
+## Phase 5A-3/3b — Live data era
+Both public views render from the Backend API via the shared hook
+src/lib/use-live-products.ts (DB rows as truth; static presentation
+defaults keyed by name; static fallback when the API sleeps).
+Product cards with dashboard-set links are clickable
+(target="_blank" rel="noopener noreferrer") across landing and Hub;
+counts derive from live data. JP accepted both views in-browser.
+Commits: 3e66aa0 (landing), 7515b55 (Hub).
+
 ## Status
-✅ DONE — Phase 2/2.1 verified by HYDRA.
+✅ DONE — Phases 2/2.1 and 5A-3/3b verified by HYDRA.
