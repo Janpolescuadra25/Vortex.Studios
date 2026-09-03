@@ -9,7 +9,7 @@ import {
   Trophy,
   Newspaper,
 } from "lucide-react";
-import { CHANGELOG, type ChangelogKind } from "@/lib/vortex-data";
+import { useLiveChangelog } from "@/lib/use-live-changelog";
 import { cn } from "@/lib/utils";
 
 const KIND_STYLE: Record<
@@ -93,6 +93,7 @@ function TimelineEntry({
 
 export function VortexWhatsNew() {
   const ref = useRef<HTMLDivElement>(null);
+  const { entries } = useLiveChangelog();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 0.72", "end 0.65"],
@@ -144,7 +145,7 @@ export function VortexWhatsNew() {
         </div>
 
         <ol className="relative space-y-10 md:space-y-14">
-          {CHANGELOG.map((entry, i) => (
+          {entries.map((entry, i) => (
             <TimelineEntry key={entry.id} entry={entry} index={i} />
           ))}
 
