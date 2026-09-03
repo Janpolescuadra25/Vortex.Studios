@@ -31,7 +31,7 @@ aid tracking.
   views confirmed; content matched canonical brief. History: commit
   4136936.
 - Root documentation: .gitignore, README.md, Road_Map.md created and
-  HYDRA-verified; Frontend/ and Backend/ established with .gitkeep
+  HYDRA-verified; Frontend_Vortex/ and Backend_Vortex/ established with .gitkeep
   files. History: commit 4136936.
 - Tooling & git bootstrap: bun 1.4.0; repo-local git identity; first
   push landed after remote verification gate (commits 4136936–28f5edd).
@@ -147,19 +147,27 @@ Completion criteria: all dynamic views render API data locally; config
 changes propagate without redeploy; no visual regressions; HYDRA-verified.
 
 ## Phase 7 — Deployment — ⚪ NOT STARTED
-Implementation: Frontend → Render (Root Directory: Frontend); Backend →
-Render (Root Directory: Backend); database → Neon (connection string in
-Render env vars only); object storage decision at 5B; all env vars set in
-platform dashboards — never in the repo; CORS tightened to production
-origins; ADMIN_PATH set in production env; production build blocker
-revisited at this phase (Render build env differs; Next 16.1.4+
-monitored).
+Implementation: self-hosted on a Hetzner VPS (multi-repo server, shared
+with other JP projects): Frontend_Vortex → Next.js production build
+served via PM2 + nginx reverse proxy; Backend_Vortex → Express API via
+PM2 behind nginx (api subdomain); PostgreSQL self-hosted on the same
+VPS (localhost-only binding, dedicated vortex database + role, pg_dump
+backups scheduled); auto-deploy from GitHub (webhook or Actions SSH →
+git pull → bun install → prisma migrate deploy → pm2 reload); all
+secrets in VPS .env files — never in the repo; CORS tightened to
+production origins; ADMIN_PATH set in production env. FIRST VPS
+EXPERIMENT: run bunx next build on Linux — if the internal error-page
+prerender failure does not reproduce on Linux, the build blocker
+dissolves; if it reproduces, evaluate dev-mode-behind-PM2 (temporary)
+or the Next 16.1.4+ upgrade path.
 Completion criteria: both deployments live and healthy over public URLs;
 HYDRA verifies through the public URLs.
 
 ## Phase 8 — Domain — ⚪ NOT STARTED
-Implementation: apex + www → Render (frontend); API subdomain → Render
-(backend); SSL provisioned; production API base URL updated.
+Implementation: DNS for vortexsdu.com → the Hetzner VPS (A record);
+nginx virtual hosts: apex + www → Frontend_Vortex (PM2), api.vortexsdu.com
+→ Backend_Vortex (PM2); SSL via certbot (Let's Encrypt); production API
+base URL updated in the frontend env; admin entrance verified over HTTPS.
 Completion criteria: https://vortexsdu.com serves all three views; API
 reachable on its subdomain; admin entrance verified over HTTPS; HYDRA-
 verified.

@@ -8,8 +8,8 @@ An independent digital product studio. Ready-made software — built to move.
 
 The source of truth for the Vortex Studios web presence and services:
 
-- `Frontend/` — the vortex.studio experience (Landing · The Hub · What's New)
-- `Backend/` — the API service powering The Hub, What's New, Stats and
+- `Frontend_Vortex/` — the vortex.studio experience (Landing · The Hub · What's New)
+- `Backend_Vortex/` — the API service powering The Hub, What's New, Stats and
   site configuration
 - `Owner Dashboard` — a hidden, authenticated control surface for the
   studio owner: landing content, appearance, media and What's New management
@@ -38,7 +38,7 @@ New lanes. Same standard.
 
 - Frontend: Next.js · React · TypeScript · Tailwind CSS
 - Backend: Node.js API · Prisma · PostgreSQL (local dev · Neon in production)
-- Hosting: Vercel (Frontend) · Render (Backend) · Neon (Database)
+- Hosting: Hetzner VPS — Frontend + Backend via PM2/nginx, self-hosted PostgreSQL
 
 ## Working this repo
 
