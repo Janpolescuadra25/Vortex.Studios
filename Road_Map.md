@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A content complete (5A-1/2/3/3b) · Incidents #4–#7 recorded and remediated · build blocker parked · Phase 5A-4 next — Phases 5B–8 not started
+**Current position:** Phase 5A-4 complete (What's New live) · Incidents #4–#7 recorded and remediated · build blocker parked · Phase 5A-4b next — Phases 5B–8 not started
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -132,6 +132,12 @@ via useLiveProducts (shared hook, derived counts, unified clickable
 links, static fallback on both views); commit 7515b55. JP browser
 acceptance COMPLETE (this commit cycle) — landing + Hub verified
 in-browser by JP.
+Completion record (5A-4): HYDRA-verified complete — What's New
+timeline live via useLiveChangelog (type normalization from backend
+uppercase enum, order reversal to oldest-first, static version merge
+by title, static fallback); commit 8d17ac1. JP browser acceptance
+PENDING — both 5A-3 and 5A-4 acceptances happen in 5A-4b's matrix
+session (all three public views in one sitting).
 
 ## Phase 6 — Integration — ⚪ NOT STARTED
 Objective: public site renders live from the Backend — data AND
