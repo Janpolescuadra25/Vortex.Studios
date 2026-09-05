@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A-4 complete (What's New live) · Incidents #4–#7 recorded and remediated · build blocker parked · Phase 5A-4b next — Phases 5B–8 not started
+**Current position:** Phase 5A-4 complete (What's New live) · Incidents #4–#7 recorded and remediated · build blocker parked · VPS-1/2/3 complete on Hetzner (hardened Ubuntu, PostgreSQL, Node/PM2/Bun, repo clone, backend/frontend PM2 deployment verified) · Phase 5A-4b next — Phase 7/8 hardening pending (nginx/domain/SSL)
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -152,29 +152,29 @@ Dependencies: Phases 2, 3 (and 5 for config rendering).
 Completion criteria: all dynamic views render API data locally; config
 changes propagate without redeploy; no visual regressions; HYDRA-verified.
 
-## Phase 7 — Deployment — ⚪ NOT STARTED
+## Phase 7 — Deployment — 🔄 IN PROGRESS
 Implementation: self-hosted on a Hetzner VPS (multi-repo server, shared
 with other JP projects): Frontend_Vortex → Next.js production build
-served via PM2 + nginx reverse proxy; Backend_Vortex → Express API via
-PM2 behind nginx (api subdomain); PostgreSQL self-hosted on the same
-VPS (localhost-only binding, dedicated vortex database + role, pg_dump
-backups scheduled); auto-deploy from GitHub (webhook or Actions SSH →
-git pull → bun install → prisma migrate deploy → pm2 reload); all
-secrets in VPS .env files — never in the repo; CORS tightened to
-production origins; ADMIN_PATH set in production env. FIRST VPS
-EXPERIMENT: run bunx next build on Linux — if the internal error-page
-prerender failure does not reproduce on Linux, the build blocker
-dissolves; if it reproduces, evaluate dev-mode-behind-PM2 (temporary)
-or the Next 16.1.4+ upgrade path.
+served via PM2; Backend_Vortex → Express API via PM2; PostgreSQL
+self-hosted on the same VPS (localhost-only binding, dedicated vortex
+database + role); secrets kept in VPS .env files — never in the repo;
+CORS set for local deployment; ADMIN_PATH set in production env.
+VPS milestone record (verified): Ubuntu 26.04 VPS hardened with deploy
+user and SSH key-only access; PostgreSQL 18.6 + Node.js 22 + PM2 + Bun
+installed; repo cloned to /home/deploy/vortex-repo; Prisma migrations
+applied; backend seeded; backend health endpoint responded at
+http://127.0.0.1:4000/health; frontend production build completed and
+served from PM2 on port 3000. Nginx reverse proxy and public DNS/SSL
+remain pending for the final production URL path.
 Completion criteria: both deployments live and healthy over public URLs;
 HYDRA verifies through the public URLs.
 
 ## Phase 8 — Domain — ⚪ NOT STARTED
-Implementation: DNS for vortexsdu.com → the Hetzner VPS (A record);
-nginx virtual hosts: apex + www → Frontend_Vortex (PM2), api.vortexsdu.com
+Implementation: DNS for vortexsdo.com → the Hetzner VPS (A record);
+nginx virtual hosts: apex + www → Frontend_Vortex (PM2), api.vortexsdo.com
 → Backend_Vortex (PM2); SSL via certbot (Let's Encrypt); production API
 base URL updated in the frontend env; admin entrance verified over HTTPS.
-Completion criteria: https://vortexsdu.com serves all three views; API
+Completion criteria: https://vortexsdo.com serves all three views; API
 reachable on its subdomain; admin entrance verified over HTTPS; HYDRA-
 verified.
 
