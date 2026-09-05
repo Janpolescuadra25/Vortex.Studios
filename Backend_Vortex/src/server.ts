@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import "dotenv/config";
 import { PrismaClient, Lane, ProductStatus, ChangelogType } from "@prisma/client";
 import { createAuthRouter } from "./auth.js";
 import { createProductsAdminRouter } from "./products-admin.js";
@@ -8,8 +9,9 @@ import { createProductsAdminRouter } from "./products-admin.js";
 const app = express();
 const prisma = new PrismaClient();
 const PORT = Number(process.env.PORT ?? 4000);
-const CORS_ORIGIN = process.env.CORS_ORIGIN ?? "http://localhost:3000";
+const CORS_ORIGIN = (process.env.CORS_ORIGIN ?? "http://localhost:3000").trim();
 
+app.set("trust proxy", 1);
 app.use(morgan("dev"));
 app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use(express.json());
