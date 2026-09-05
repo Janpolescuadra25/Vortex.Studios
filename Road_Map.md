@@ -6,7 +6,7 @@ HYDRA-verified repository state, never intentions. Updated as phases
 complete; completed phases are compressed or removed when they no longer
 aid tracking.
 
-**Current position:** Phase 5A-4 complete (What's New live) · Incidents #4–#7 recorded and remediated · build blocker parked · VPS-1/2/3 complete on Hetzner (hardened Ubuntu, PostgreSQL, Node/PM2/Bun, repo clone, backend/frontend PM2 deployment verified) · Phase 5A-4b next — Phase 7/8 hardening pending (nginx/domain/SSL)
+**Current position:** PHASE 7+8 COMPLETE — vortexsdo.com LIVE over HTTPS on the Hetzner VPS · Incidents #4–#10 recorded and remediated · Phase 5A-4b next (What's New console editor) — Phases 5B–6 remain
 
 ## Ground rules
 1. Repository root is this folder. Reference material (Docs\Vortex_reference)
@@ -127,6 +127,17 @@ masked input (rotation 3); .env-only startup rule made permanent;
 mask-input-then-discard pattern reaffirmed. Functional proof: JP's
 masked login with the new credential.
 
+Security record (Incidents #8–#10): incidents #8/#9 (server .env
+displayed; server hash corrupted via unquoted heredoc) remediated
+via argument-passing fixers + bcrypt compareSync diagnostic
+(MISMATCH verdict → re-hash). Incident #10: the rotation-3 password
+and server ADMIN_PATH were displayed in chat during the VPS-3-SEC-2
+matrix — remediated by rotating ALL production secrets during the
+8-DOMAIN unit (the required production rebuild rode the rotation).
+Owner password: JP's choice at the masked prompt (rotation or
+retention — owner ruling). HARDENED .env rule unchanged: agents
+never hold secrets.
+
 Completion record (5A-3b): HYDRA-verified complete — the Hub live
 via useLiveProducts (shared hook, derived counts, unified clickable
 links, static fallback on both views); commit 7515b55. JP browser
@@ -152,7 +163,18 @@ Dependencies: Phases 2, 3 (and 5 for config rendering).
 Completion criteria: all dynamic views render API data locally; config
 changes propagate without redeploy; no visual regressions; HYDRA-verified.
 
-## Phase 7 — Deployment — 🔄 IN PROGRESS
+## Phase 7 — Deployment — ✅ COMPLETED (live on Hetzner: PM2 + nginx + SSL via vortexsdo.com)
+Completion record (VPS-3-SEC/8-DOMAIN): HYDRA-verified — login
+reconciled through the public endpoint (bcrypt compareSync
+diagnostic: MISMATCH verdict → hash re-written; incidents #8/#9
+remediated), SSL via certbot (vortexsdo.com + www, HTTP→HTTPS
+redirect, www canonicalized to apex), production frontend rebuilt
+with NEXT_PUBLIC_API_URL=https://vortexsdo.com (fixing the remote-
+visitor localhost issue), server secrets rotated. Production build
+PASSED on Linux — the Windows-era prerender failure did not
+reproduce (re-confirmed at the production rebuild in this unit).
+Outstanding infrastructure: auto-deploy webhook + pg_dump backup
+cron (VPS-4/next infra unit).
 Implementation: self-hosted on a Hetzner VPS (multi-repo server, shared
 with other JP projects): Frontend_Vortex → Next.js production build
 served via PM2; Backend_Vortex → Express API via PM2; PostgreSQL
@@ -169,7 +191,15 @@ remain pending for the final production URL path.
 Completion criteria: both deployments live and healthy over public URLs;
 HYDRA verifies through the public URLs.
 
-## Phase 8 — Domain — ⚪ NOT STARTED
+## Phase 8 — Domain — ✅ COMPLETED (vortexsdo.com live over HTTPS)
+Completion record: DNS A records (@ + www → 2.28.120.85) via JP in
+Cloudflare (parking/wildcard/acme records removed; MX/SPF retained
+for domain email); nginx server_name vortexsdo.com + www (www
+canonicalized to apex); certbot SSL (HTTP→HTTPS redirect);
+production env rotated (NEXT_PUBLIC_API_URL, ADMIN_PATH,
+SESSION_SECRET, CORS_ORIGIN; owner password per JP's choice at
+masked input). Verified: all three views + API over HTTPS; admin
+path proof.
 Implementation: DNS for vortexsdo.com → the Hetzner VPS (A record);
 nginx virtual hosts: apex + www → Frontend_Vortex (PM2), api.vortexsdo.com
 → Backend_Vortex (PM2); SSL via certbot (Let's Encrypt); production API
