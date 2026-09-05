@@ -175,6 +175,16 @@ PASSED on Linux — the Windows-era prerender failure did not
 reproduce (re-confirmed at the production rebuild in this unit).
 Outstanding infrastructure: auto-deploy webhook + pg_dump backup
 cron (VPS-4/next infra unit).
+Deployment record (PHASE 7/8 LIVE): vortexsdo.com serving over
+HTTPS (Cloudflare DNS A records @ + www → 2.28.120.85, grey cloud;
+certbot SSL with HTTP→HTTPS redirect; www canonicalized to apex);
+PM2 running vortex-backend (:4000) + vortex-frontend (:3000
+standalone) behind nginx path-based routing (/api/ + /health →
+backend, / → frontend); production frontend rebuilt with
+NEXT_PUBLIC_API_URL=https://vortexsdo.com (bundle grep confirmed);
+ADMIN_PATH injected into PM2 runtime env for middleware; production
+login verified through the public endpoint. Infrastructure
+remaining: auto-deploy webhook + pg_dump backup cron (VPS-4).
 Implementation: self-hosted on a Hetzner VPS (multi-repo server, shared
 with other JP projects): Frontend_Vortex → Next.js production build
 served via PM2; Backend_Vortex → Express API via PM2; PostgreSQL
@@ -200,6 +210,11 @@ production env rotated (NEXT_PUBLIC_API_URL, ADMIN_PATH,
 SESSION_SECRET, CORS_ORIGIN; owner password per JP's choice at
 masked input). Verified: all three views + API over HTTPS; admin
 path proof.
+Acceptance record (5A-3/3b/4 + 7/8): JP browser acceptance
+COMPLETE — landing, Hub, What's New, admin login, and clickable
+links verified in-browser on the production server
+(https://vortexsdo.com). All three public views live from
+PostgreSQL. Pending: 5A-4b console editor, 5A-5 site-config.
 Implementation: DNS for vortexsdo.com → the Hetzner VPS (A record);
 nginx virtual hosts: apex + www → Frontend_Vortex (PM2), api.vortexsdo.com
 → Backend_Vortex (PM2); SSL via certbot (Let's Encrypt); production API
